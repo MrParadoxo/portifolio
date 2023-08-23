@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="frmSkillItem" width="410" height="25" theme="dark" margins="{top=2, bottom=2, right=10}">
+
+	<script> 
+		<![CDATA[			
+		local function askForDelete()
+			dialogs.confirmYesNo("Deseja realmente apagar essa perícia?",
+				function (confirmado)
+					if confirmado then
+						ndb.deleteNode(sheet);
+					end;
+				end);
+		end;
+
+		local function showPericiaPopup()
+			local pop = self:findControlByName("popPericia");
+				
+			if pop ~= nil then
+				pop:setNodeObject(self.sheet);
+				pop:showPopupEx("right", self);
+			else
+				showMessage("Ops, bug.. nao encontrei o popup de pericias para exibir");
+			end;				
+		end;
+
+		local function roll()
+			local mesa = Firecast.getMesaDe(sheet);
+			local node = NDB.getRoot(sheet);
+
+			local total = math.floor(tonumber(sheet.total) or 0);
+			local rolagem = Firecast.interpretarRolagem("1d10 + " .. total);
+
+			mesa.activeChat:rolarDados(rolagem, "Teste de " .. (sheet.nomePericia or "Pericia") .. " de " .. (node.nome or "Nome"));				
+		end;
+
+		]]>	
+	</script>
+
+	<rectangle align="client" color="#202020" hitTest="false"/>
+
+	<edit vertTextAlign="center" left="5" top="0" width="155" height="25" field="nome">
+		<event name="onChange">
+			local rcl = self:findControlByName("rclListaDasPericias");
+			if rcl~= nil then
+				rcl:sort();
+			end;
+		</event>
+	</edit>
+	<comboBox vertTextAlign="center" horzTextAlign="center" left="160" top="0" width="70" height="25" field="atributo" items="{'ATR', 'TCO', 'AuCon', 'REF', 'TEC', 'INT', 'EMP'}" values="{'1', '2', '3', '4', '5', '6', '7'}" fontColor="white">
+		<event name="onChange">
+			if sheet~= nil then
+
+				local atributoPericia = 0;
+				local node = ndb.getRoot(sheet);
+
+				if sheet.atributo == "1" then
+					atributoPericia = tonumber(node.atratividade) or 0;
+				elseif sheet.atributo == "2" then
+					atributoPericia = tonumber(node.tipoCorporal) or 0;
+				elseif sheet.atributo == "3" then
+					atributoPericia = tonumber(node.autocontrole) or 0;
+				elseif sheet.atributo == "4" then
+					atributoPericia = tonumber(node.reflexos) or 0;
+				elseif sheet.atributo == "5" then
+					atributoPericia = tonumber(node.tecnica) or 0;
+				elseif sheet.atributo == "6" then
+					atributoPericia = tonumber(node.inteligencia) or 0;
+				elseif sheet.atributo == "7" then
+					atributoPericia = tonumber(node.empatia) or 0;
+				end;
+				sheet.atributoPericia = atributoPericia;
+			end;
+		</event>
+	</comboBox>
+
+	<button left="230" top="1" width="23" height="23" text="R" onClick="roll();"/>
+
+	<rectangle left="255" top="0" width="35" height="25" color="black" strokeColor="white" strokeSize="1"/>
+	<label field="total" text="0" left="255" top="0" width="35" height="25" horzTextAlign="center"/>
+
+	<rectangle left="290" top="0" width="30" height="24" color="black" strokeColor="white" strokeSize="1"/>
+	<label field="atributoPericia" text="0" left="290" top="0" width="30" height="20" horzTextAlign="center"/>
+
+	<edit vertTextAlign="center" horzTextAlign="center" left="320" top="0" width="30" height="25" field="pontos" type="number"/>
+
+	<button left="350" top="1" width="23" height="23" text="i" onClick="showPericiaPopup();"/>
+	<button left="375" top="1" width="23" height="23" text="X" onClick="askForDelete();"/>
+
+	<dataLink fields="{'atributoPericia', 'pontos', 'atributo', 'cyber', 'magia', 'outros'}">
+		<event name="onChange">
+			if sheet== nil then return end;
+
+			local mod = 0;
+			mod = 	(tonumber(sheet.atributoPericia) or 0) +
+					(tonumber(sheet.pontos) or 0) +
+					(tonumber(sheet.cyber) or 0) +
+					(tonumber(sheet.magia) or 0) +
+					(tonumber(sheet.outros) or 0);
+
+			sheet.total = mod;
+		</event>
+	</dataLink>
+</form>

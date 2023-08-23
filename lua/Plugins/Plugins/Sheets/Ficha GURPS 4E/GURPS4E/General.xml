@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rectangle class="fundo">
+	<template name="header">
+		<flowPart class="magicHeader" frameStyle="frames/magicHeader/header1.xml">
+			<edit frameRegion="RegiaoConteudo1" class="magicLevelInformation" field="left_$(field)"/>
+			<edit frameRegion="RegiaoConteudo2" class="magicLevelInformation" field="right_$(field)"/>
+		</flowPart>	
+	</template>	
+
+	<popup name="popSkill" width="250" height="250" backOpacity="0.4" autoScopeNode="false">
+		<edit align="top" class="" field="nome" textPrompt="NOME DA MAGIA" horzTextAlign="center"/>
+	
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="2" margins="{bottom=4}" horzAlign="center">
+			<magicInfoField text="TIPO" field="tipo"/>
+			<magicInfoField text="CUSTO" field="pts"/>
+		</flowLayout>
+		
+		<textEditor align="client" field="descricao" class=""/>
+	</popup>
+
+	<scrollBox align="client">
+		<flowLayout class="tile" align="top" height="500" margins="{left=10, right=10, top=10}" autoHeight="true" horzAlign="center" lineSpacing="1" name="fraFrenteLayoutNew" maxControlsPerLine="4">
+			
+			<!-- Titulo -->
+			<flowLayout class="oneLineTile2" autoHeight="true" minScaledWidth="290" horzAlign="center">
+				<!-- NOME DO PERSONAGEM -->													
+				<flowPart class="tile" minWidth="320" maxWidth="1600" frameStyle="frames/banner/dragon.xml" height="175" vertAlign="center" avoidScale="true">							
+					<layout align="client">
+						<edit field="nome" class="transparente center" fontSize="17" align="client"/>
+						<label align="bottom" text="NOME DO PERSONAGEM" class="tituloCampo" autoSize="true" margins="{left=3}"/>
+					</layout>
+				</flowPart>				
+		
+				<!-- GRID DE INFORMACOES SUPERIORES DA FRENTE -->
+				<flowLayout class="tile"  minWidth="320" maxWidth="1600" name="fraUpperGridCaracteristicas" avoidScale="true" frameStyle="frames/upperInfoGrid/frame.xml" autoHeight="true" vertAlign="trailing" maxControlsPerLine="4">
+					<upperGridCampo field="olhos" minWidth="100" titulo="JOGADOR"/>
+					<upperGridCampo field="pele" titulo="MOD DE TAMANHO"/>
+					<upperGridCampo field="totalPontos" titulo="PONTOS PARA GASTAR"/>
+
+					<flowLineBreak/>
+
+					<upperGridCampo field="idade" minWidth="100" titulo="IDADE"/>
+					<upperGridCampo field="altura" titulo="ALTURA"/>
+					<upperGridCampo field="peso" titulo="PESO"/>					
+					<upperGridCampo field="pontosRestantes" titulo="PONTOS RESTANTES"/>
+				</flowLayout>	
+			</flowLayout>			
+	
+			<flowLineBreak/>
+
+			<!-- Atributos Primarios -->
+			<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="120" maxScaledWidth="240" margins="{right=0}" horzAlign="center" vertAlign="center" maxControlsPerLine="1" frameStyle="frames/panel1/frameSmall.xml">
+				<flowLayout height="140" class="oneLineTile" minScaledWidth="120" maxScaledWidth="240" horzAlign="center" maxControlsPerLine="3">
+					<boxAtributo titulo="ST" field="st"/>
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="140" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="PV" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_pv" fontSize="30"/>	
+					</flowPart>	
+					<flowPart minWidth="30" maxWidth="30" margins="{top=60}" height="30" frameStyle="">
+						<edit align="left" field="atributos_pv" width="30" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+				</flowLayout>
+
+				<flowLayout height="140" class="oneLineTile" minScaledWidth="120" maxScaledWidth="240" horzAlign="center" maxControlsPerLine="3">
+					<boxAtributo titulo="DX" field="dx"/>
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="140" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Vontade" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_vt" fontSize="30"/>	
+					</flowPart>	
+					<flowPart minWidth="30" maxWidth="30" margins="{top=60}" height="30" frameStyle="">
+						<edit align="left" field="atributos_vt" width="30" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+				</flowLayout>
+
+				<flowLayout height="140" class="oneLineTile" minScaledWidth="120" maxScaledWidth="240" horzAlign="center" maxControlsPerLine="3">
+					<boxAtributo titulo="IQ" field="iq"/>
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="140" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Percepção" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_per" fontSize="30"/>	
+					</flowPart>	
+					<flowPart minWidth="30" maxWidth="30" margins="{top=60}" height="30" frameStyle="">
+						<edit align="left" field="atributos_per" width="30" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+				</flowLayout>
+
+				<flowLayout height="140" class="oneLineTile" minScaledWidth="120" maxScaledWidth="240" horzAlign="center" maxControlsPerLine="3">
+					<boxAtributo titulo="HT" field="ht"/>
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="140" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="PF" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_pf" fontSize="30"/>	
+					</flowPart>	
+					<flowPart minWidth="30" maxWidth="30" margins="{top=60}" height="30" frameStyle="">
+						<edit align="left" field="atributos_pf" width="30" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+				</flowLayout>
+
+			</flowLayout>
+
+			<dataLink fields="{'atributos_st','atributos_ht','atributos_dx','atributos_vt','atributos_iq','atributos_per','atributos_velocidade','atributos_deslocamento','dodge_cost'}" defaultValues="{'0','0','0','0','0','0','0','0','0'}"/>
+			<dataLink fields="{'atributos_mod_st','atributos_mod_dx','atributos_mod_iq','atributos_mod_ht','atributos_mod_vt','atributos_mod_per'}" defaultValues="{10,10,10,10,10,10}"/>
+
+			<!-- Estatisticas -->
+			<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="290" margins="{right=10}" horzAlign="center" maxControlsPerLine="1">
+				<!-- Bloqueio e Dano -->
+				<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="290" horzAlign="center" maxControlsPerLine="3" frameStyle="frames/panel1/frame.xml">
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/shield/frame.xml">
+						<label align="top" text="Defesa" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="a" fontSize="30"/>	
+					</flowPart>	
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Dano GeB" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="gdb" fontSize="30"/>	
+					</flowPart>	
+
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Dano GdP" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="gdp" fontSize="30"/>	
+					</flowPart>	
+				</flowLayout>
+				
+				<!-- Resistencias -->
+				<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="290" horzAlign="center" maxControlsPerLine="2" frameStyle="frames/panel1/frame.xml" >
+					<upperGridCampo field="rdCabeca" minWidth="100" titulo="Cabeça"/>
+					<upperGridCampo field="rdMaos" minWidth="100" titulo="Mãos"/>
+					<upperGridCampo field="rdTronco" minWidth="100" titulo="Tronco"/>
+					<upperGridCampo field="rdPernas" minWidth="100" titulo="Pernas"/>
+					<upperGridCampo field="rdBracos" minWidth="100" titulo="Braços"/>
+					<upperGridCampo field="rdPes" minWidth="100" titulo="Pés"/>
+
+					<label align="bottom" text="RESISTÊNCIA A DANO" height="20" fontSize="11" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+				</flowLayout>
+				
+				<!-- Mobilidade -->
+				<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="290" horzAlign="center" maxControlsPerLine="3" frameStyle="frames/panel1/frame.xml">
+
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Esquiva" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="dodge" fontSize="30"/>	
+					</flowPart>	
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Vel Base" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_velocidade" fontSize="30"/>	
+					</flowPart>	
+					<flowPart stepSizes="{105}" minScaledWidth="75" height="120" margins="{top=0}" frameStyle="frames/panel4transp/frame.xml">
+						<label align="top" text="Desl Base" height="20" fontSize="9" wordWrap="true" horzTextAlign="center" textTrimming="none"/>
+						<edit align="client" class="atributo transparente" field="atributos_mod_deslocamento" fontSize="30"/>	
+					</flowPart>	
+
+					<flowPart minWidth="80" maxWidth="160" margins="{top=10, left=15}" height="20" frameStyle="">
+						<edit align="left" field="dodge_cost" width="50" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+					<flowPart minWidth="80" maxWidth="160" margins="{top=10,left=15}" height="20" frameStyle="">
+						<edit align="left" field="atributos_velocidade" width="50" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+					<flowPart minWidth="80" maxWidth="160" margins="{top=10,left=15}" height="20" frameStyle="">
+						<edit align="left" field="atributos_deslocamento" width="50" horzTextAlign="center" transparent="true"/>
+					</flowPart>
+
+					<label align="bottom" text="MOBILIDADE" height="20" fontSize="11" wordWrap="true" horzTextAlign="center" margins="{bottom=10}" textTrimming="none"/>
+				</flowLayout>
+			</flowLayout>
+
+			<flowLayout autoHeight="true" class="oneLineTile" minScaledWidth="290" horzAlign="center">
+				<flowPart minWidth="280" maxWidth="800" margins="{top=10}" height="64" frameStyle="frames/posCaptionEdit2/frame.xml">
+					<edit align="left" class="pericia" field="nt_total" width="65"/>
+					<label align="client" text="Nível Tecnológico" margins="{left=10}" class="tituloCampo" horzTextAlign="center"/>
+				</flowPart>
+
+				<flowLineBreak/>
+
+				<flowPart class="tileCarac" height="500" frameStyle="frames/panel5/frame.xml" margins="{left = 4, right = 4}">
+					<layout align="top" height="25">
+						<label align="top" autoSize="true" text="PERÍCIAS" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+						<button align="left" text="+" width="25" hint="Adiciona uma perícia." horzTextAlign="center" onClick="self.rclSkillsNew:append();" margins="{top=-10}"/>
+					</layout>
+
+					<recordList align="client" name="rclSkillsNew" field="listaDePericias" templateForm="frmSkillItem" layout="vertical">
+						<event name="onCompare">
+			                return Utils.compareStringPtBr(nodeA.nome, nodeB.nome);
+			        	</event>
+					</recordList>
+				</flowPart>
+
+				<dataLink fields="{'totalPontos', 'atributos_st', 'atributos_ht', 'atributos_dx', 'atributos_vt', 'atributos_iq', 'atributos_per', 'atributos_pv', 'atributos_pf', 'atributos_velocidade', 'atributos_deslocamento','dodge_cost'}">
+					<event name="onChange">
+						pointCount();
+					</event>
+				</dataLink>
+			</flowLayout>
+ 
+		</flowLayout>
+	</scrollBox>
+</rectangle>

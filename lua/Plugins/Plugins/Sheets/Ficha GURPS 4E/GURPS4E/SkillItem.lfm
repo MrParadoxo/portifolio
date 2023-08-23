@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="frmSkillItem" width="365" height="25" margins="{top=5, right=5}">
+	<rectangle align="client" color="#404040">
+
+		<layout align="right" width="180">
+			<rectangle left="0" top="0" width="30" height="25" color="black" strokeColor="white" strokeSize="1"/>
+	        <label left="0" top="3" width="30" height="20" field="nh" horzTextAlign="center"/>
+
+			<comboBox left="30" top="0" width="50" height="25" field="atr" items="{'ST', 'DX', 'IQ', 'HT', 'Vont', 'Per', '-'}"/>
+
+			<edit left="85" top="0" width="35" height="25" type="number" field="dx" transparent="true" horzTextAlign="center"/>
+			<horzLine left="85" top="22" width="35" strokeColor="white"/>
+
+			<button left="125" top="0" width="25" height="25" text="i">
+				<event name="onClick">
+					local pop = self:findControlByName("popSkill");
+						
+					if pop ~= nil then
+						pop:setNodeObject(self.sheet);
+						pop:showPopupEx("bottomCenter", self);
+					else
+						showMessage("Ops, bug.. nao encontrei o popup para exibir");
+					end;				
+				</event>
+			</button>
+			
+			<button left="155" top="0" width="25" height="25" text="X">
+				<event name="onClick">
+					Dialogs.confirmOkCancel("Tem certeza que quer apagar esse objeto?",
+						function (confirmado)
+							if confirmado then
+								NDB.deleteNode(sheet);
+							end;
+					end);
+				</event>
+			</button>
+		</layout>
+
+		<layout align="client">
+			<edit align="client" field="nome" transparent="true"/>
+			<horzLine align="bottom" strokeColor="white"/>
+		</layout>
+
+		<dataLink field="pts">
+			<event name="onChange">
+				pointCount();
+			</event>
+		</dataLink>
+
+		<dataLink fields="{'atr', 'dx'}">
+			<event name="onChange">
+				if sheet==nil then return end;
+
+				local nh = (tonumber(sheet.dx) or 0);
+
+				local mod = 0;
+				local node = NDB.getRoot(sheet);
+				if sheet.atr=="ST" then
+					mod = (tonumber(node.atributos_mod_st) or 0);
+				elseif sheet.atr=="DX" then
+					mod = (tonumber(node.atributos_mod_dx) or 0);
+				elseif sheet.atr=="IQ" then
+					mod = (tonumber(node.atributos_mod_iq) or 0);
+				elseif sheet.atr=="HT" then
+					mod = (tonumber(node.atributos_mod_ht) or 0);
+				elseif sheet.atr=="Vont" then
+					mod = (tonumber(node.atributos_mod_vt) or 0);
+				elseif sheet.atr=="Per" then
+					mod = (tonumber(node.atributos_mod_per) or 0);
+				else
+					mod = 0;
+				end
+
+				mod =  math.min(mod, 20);
+
+				local total = nh + mod;
+				total =  math.max(total, 3);
+
+				sheet.nh = total;
+			</event>
+		</dataLink>
+	</rectangle>
+</form>
