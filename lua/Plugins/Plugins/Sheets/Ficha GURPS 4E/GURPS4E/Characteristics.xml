@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rectangle class="fundo">
+	<scrollBox align="client">
+		<flowLayout class="tile" align="top" height="500" margins="{left=10, right=10, top=10}" autoHeight="true" horzAlign="center" lineSpacing="3" name="fraCaracteristicasLayout">
+		
+			<!-- SEGUNDA LINHA -->		
+			<flowLayout class="oneLineTile2" autoHeight="true" minScaledWidth="290" horzAlign="center" lineSpacing="10">
+				<!-- PRIMEIRA COLUNA -->
+				<flowLayout maxControlsPerLine="1" autoHeight="true" class="tileCarac" lineSpacing="10" margins="{left = 4, right = 4}">
+					<!-- IMAGEM -->
+					<flowPart class="tileCarac" height="390" frameStyle="frames/panel5/frame.xml" margins="{left = 0, right = 4}">
+						<image align="client" style="autoFit" field="imagens.aparencia" class="transparente" margins="{top=2}" editable="true" animate="true"/>
+						<label align="bottom" autoSize="true" text="APARÊNCIA" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>		
+					
+					<!-- IDIOMAS -->			
+					<flowPart class="tileCarac" height="115" frameStyle="frames/panel5/frame.xml" margins="{left = 4, right = 0}">
+						<textEditor align="client" field="reacao" class="transparente" margins="{top=2}" fontSize="16"/>
+						<label align="bottom" autoSize="true" text="IDIOMAS" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>		
+				</flowLayout>
+			
+				<!-- TRACOS DE PERSONALIDADE, IDEAIS, VINCULOS, FRAQUEZAS -->					
+				<flowLayout maxControlsPerLine="1" autoHeight="true" class="tileCarac" lineSpacing="10" margins="{left=4, right=4}">
+				
+					<!-- TRAÇOS DE PERSONALIDADE -->				
+					<flowPart class="tileCarac" height="140" frameStyle="frames/panel5/topPanel.xml" margins="{left = 4, right = 4}">
+						<textEditor align="client" field="tracosPersonalidade" class="transparente" margins="{top=2}" fontSize="16"/>
+						<label align="bottom" autoSize="true" text="TRAÇOS DE PERSONALIDADE" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>	
+					
+					<!-- IDEAIS -->				
+					<flowPart class="tileCarac" height="115" frameStyle="frames/panel5/centerPanel.xml" margins="{left = 4, right = 4}">
+						<textEditor align="client" field="qualidades" class="transparente" margins="{top=2}" fontSize="16"/>
+						<label align="bottom" autoSize="true" text="QUALIDADES" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>					
+					
+					<!-- IDEAIS -->				
+					<flowPart class="tileCarac" height="115" frameStyle="frames/panel5/centerPanel.xml" margins="{left = 4, right = 4}">
+						<textEditor align="client" field="peculiaridades" class="transparente" margins="{top=2}" fontSize="16"/>
+						<label align="bottom" autoSize="true" text="PECULIARIDADES" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>			
+
+									
+					<!-- FRAQUEZAS -->				
+					<flowPart class="tileCarac" height="115" frameStyle="frames/panel5/bottomPanel.xml" margins="{left = 4, right = 4}">
+						<textEditor align="client" field="vinculos" class="transparente" margins="{top=2}" fontSize="16"/>
+						<label align="bottom" autoSize="true" text="FAMILIARIDADES CULTURAIS" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>	
+				</flowLayout>		
+
+				<!-- CARACTERISTICAS E TRACOS -->			
+				<flowPart class="tileCarac" height="515" frameStyle="frames/panel5/frame.xml" margins="{left = 4, right = 4}">
+					<button margins="{top=5,bottom=5}" align="top" text="Vantagens" width="250">
+						<event name="onClick">
+							local pop = self:findControlByName("popDetails");
+					
+							if sheet.advantages == nil then
+								sheet.advantages = {};
+								sheet.advantages.title = "Vantagens";
+							else
+								sheet.advantages.title = "Vantagens";
+							end;
+
+							if pop ~= nil then
+								pop:setNodeObject(sheet.advantages);
+								pop:showPopupEx("center", self);
+							elseif sheet.advantages == nil then
+								showMessage(sheet.advantages);
+							else
+								showMessage("Ops, bug.. nao encontrei o popup para exibir");
+							end;
+						</event>
+					</button>
+
+					<button margins="{top=5,bottom=5}" align="top" text="Desvantagens" width="250">
+						<event name="onClick">
+							local pop = self:findControlByName("popDetails");
+					
+							if sheet.disadvantages == nil then
+								sheet.disadvantages = {};
+								sheet.disadvantages.title = "Desvantagens";
+							else
+								sheet.disadvantages.title = "Desvantagens";
+							end;
+
+							if pop ~= nil then
+								pop:setNodeObject(sheet.disadvantages);
+								pop:showPopupEx("center", self);
+							elseif sheet.disadvantages == nil then
+								showMessage(sheet.disadvantages);
+							else
+								showMessage("Ops, bug.. nao encontrei o popup para exibir");
+							end;
+						</event>
+					</button>
+
+					<dataLink fields="{'vantagens_pontos', 'desvantagens_pontos'}">
+						<event name="onChange">
+							pointCount();
+						</event>
+					</dataLink>
+
+					<textEditor align="client" field="caracteristicasETracoes" class="transparente" margins="{top=2}" fontSize="16"/>
+					<label align="bottom" autoSize="true" text="CARACTERÍSTICAS E TRAÇOS" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+				</flowPart>			
+			</flowLayout>
+			
+			<flowLineBreak/>
+			
+			<!-- TERCEIRA LINHA -->		
+			<flowLayout class="oneLineTile2" autoHeight="true" minScaledWidth="290" horzAlign="center" lineSpacing="10" margins="{top=5}">
+				<!-- ALIADOS E ORGANIZAÇÕES -->					
+				<flowLayout name="fraAliadosOrganizacoes" class="tile" autoHeight="true" frameStyle="frames/panel5/frame.xml" margins="{left = 4, right = 4}" horzAlign="center">
+					<event name="onBeforeLayoutCalc">
+						<![CDATA[
+								if self.fraAliadosOrganizacoes:getWidth() <= 500 then
+									self.prtAliados:setHeight(200);
+									self.prtFaccao:setHeight(200);									
+								else
+									self.prtAliados:setHeight(420);
+									self.prtFaccao:setHeight(350);
+								end;
+						]]>
+					</event>				
+				
+					<flowPart name="prtAliados" minWidth="300" maxWidth="1600" minScaledWidth="290" height="420" avoidScale="true">
+						<textEditor align="client" field="aliados.aliadosEOrganizacoes" class="transparente" margins="{top=2, left=4, right=4}" fontSize="16"/>
+					</flowPart>	
+					
+					<flowPart name ="prtFaccao" class="halfTile" stepSizes="{260, 310}" maxScaledWidth="310" avoidScale="true" height="350" frameStyle="frames/panel4transp/frame.xml" margins="{left=4, right=4, bottom=4, top=4}">
+						<label align="top" horzTextAlign="leading" text="FACÇÃO" fontSize="11" fontColor="gray" margins="{left=4, right=4}"/>
+						<edit align="top" field="aliados.faccao.nome" margins="{left=4, right=4}"/>
+						<image align="client" field="aliados.faccao.simbolo" editable="true" style="autoFit" margins="{left=4, right=4}"/>
+						<label align="bottom" autoSize="true" text="SÍMBOLO DA FACÇÃO" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>
+					
+					<flowLineBreak/>
+					
+					<flowPart minWidth="200" maxWidth="1800" height="16">
+						<label align="client" autoSize="true" text="ALIADOS E ORGANIZAÇÕES" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+					</flowPart>
+				</flowLayout>				
+				
+				<!-- HISTÓRIA DO PERSONAGEM -->		
+				<flowPart class="tile" height="515" frameStyle="frames/panel5/frame.xml" margins="{left = 4, right = 4}" adjustHeightToLine="true">
+					<textEditor align="client" field="historia.texto" class="transparente" margins="{top=2}" fontSize="16"/>
+					<label align="bottom" autoSize="true" text="HISTÓRIA" fontSize="12" vertTextAlign="center" horzTextAlign="center" fontStyle="bold"/>
+				</flowPart>	
+			</flowLayout>
+		</flowLayout>	
+	</scrollBox>
+</rectangle>	

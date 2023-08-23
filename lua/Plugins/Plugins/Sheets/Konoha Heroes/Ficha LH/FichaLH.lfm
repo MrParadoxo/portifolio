@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="frmFichaKH" formType="sheetTemplate" dataType="HashBR.KH" title="Konoha Heroes 2.2" align="client" theme="dark">
+    <tabControl align="client">
+        <tab title="Principal">
+            <import file="LH.1.lfm"/>
+        </tab>
+        <tab name="jutsusNINGENTAI" visible="false" title="Jutsus e Clan">
+            <import file="LH.2.lfm"/>
+        </tab>       
+        <tab name="inventario" visible="false" title="Inventário">
+            <import file="LH.5.lfm"/>
+        </tab>
+		<tab title="Descrições">
+            <import file="LH.6.lfm"/>
+        </tab>
+		<tab name="anot" visible="false" title="Anotações">
+            <import file="LH.7.lfm"/>
+        </tab>
+		<tab title="Creditos">
+            <import file="LH.8.lfm"/>
+        </tab>
+    </tabControl>
+</form>

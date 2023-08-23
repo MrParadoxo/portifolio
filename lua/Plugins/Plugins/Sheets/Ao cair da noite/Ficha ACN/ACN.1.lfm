@@ -1,0 +1,737 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form name="frmACN1" align="client" theme="dark">
+	<script>
+		local function ShowPopup(popup, bt)
+			local pop = self:findControlByName(popup);
+			
+			if pop ~= nil then
+				pop:setNodeObject(self.sheet);
+				pop:showPopupEx("rightCenter", self[bt]);
+			else
+				showMessage("Ops, bug.. nao encontrei o popup de atributos para exibir");
+			end;
+		end
+	</script>
+
+	<popup name="popOther" width="400" height="550" backOpacity="0.4" autoScopeNode="false">
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="5" margins="{bottom=4}" horzAlign="center">
+			<otherSmallCenter text="Inicial" field="inicial"/>
+			<otherSmallCenter text="Apr." field="aprimoramento"/>
+			<otherSmallCenter text="XP" field="xp"/>
+			<otherSmallCenter text="Custo Apr." field="multApr"/>
+			<otherSmallCenter text="Custo XP" field="multXp"/>
+		</flowLayout>
+		<textEditor align="client" field="descricao"/>
+	</popup>
+	<popup name="popHistorico" width="400" height="550" backOpacity="0.4" autoScopeNode="false">
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="5" margins="{bottom=4}" horzAlign="center">
+			<otherSmallCenter text="Inicial" field="historicoValor"/>
+			<otherSmallCenter text="Apr." field="historicoBonus"/>
+			<otherSmallCenter text="XP" field="historicoXp"/>
+		</flowLayout>
+		<textEditor align="client" field="descricao"/>
+
+        <dataLink field="historicoValor">
+			<event name="onUserChange">
+				local node = NDB.getRoot(sheet)
+				local id = self.popHistorico.scopeNode.id or "_"
+				node["historicoValor"..id] = self.popHistorico.scopeNode.historicoValor
+			</event>
+		</dataLink>
+        <dataLink field="historicoBonus">
+			<event name="onUserChange">
+				local node = NDB.getRoot(sheet)
+				local id = self.popHistorico.scopeNode.id or "_"
+				node["historicoBonus"..id] = self.popHistorico.scopeNode.historicoBonus
+			</event>
+		</dataLink>
+        <dataLink field="historicoXp">
+			<event name="onUserChange">
+				local node = NDB.getRoot(sheet)
+				local id = self.popHistorico.scopeNode.id or "_"
+				node["historicoXp"..id] = self.popHistorico.scopeNode.historicoXp
+			</event>
+		</dataLink>
+	</popup>
+	<popup name="popFisicos" width="350" height="120" backOpacity="0.4" autoScopeNode="false">
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="6" margins="{bottom=4}" horzAlign="center">
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Força" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseforca"/>
+			<otherSmallCenter text="Inicial" field="inicialforca"/>
+			<otherSmallCenter text="Apr." field="bonusforca"/>
+			<otherSmallCenter text="XP" field="xpforca"/>
+			<otherSmallCenter text="Outros" field="outroforca"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Agilidade" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseagilidade"/>
+			<otherSmallCenter text="Inicial" field="inicialagilidade"/>
+			<otherSmallCenter text="Apr." field="bonusagilidade"/>
+			<otherSmallCenter text="XP" field="xpagilidade"/>
+			<otherSmallCenter text="Outros" field="outroagilidade"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Resiliência" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseresiliencia"/>
+			<otherSmallCenter text="Inicial" field="inicialresiliencia"/>
+			<otherSmallCenter text="Apr." field="bonusresiliencia"/>
+			<otherSmallCenter text="XP" field="xpresiliencia"/>
+			<otherSmallCenter text="Outros" field="outroresiliencia"/>
+		</flowLayout>
+	</popup>
+	<popup name="popMentais" width="350" height="120" backOpacity="0.4" autoScopeNode="false">
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="6" margins="{bottom=4}" horzAlign="center">
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Carisma" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="basecarisma"/>
+			<otherSmallCenter text="Inicial" field="inicialcarisma"/>
+			<otherSmallCenter text="Apr." field="bonuscarisma"/>
+			<otherSmallCenter text="XP" field="xpcarisma"/>
+			<otherSmallCenter text="Outros" field="outrocarisma"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Percepção" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="basepercepcao"/>
+			<otherSmallCenter text="Inicial" field="inicialpercepcao"/>
+			<otherSmallCenter text="Apr." field="bonuspercepcao"/>
+			<otherSmallCenter text="XP" field="xppercepcao"/>
+			<otherSmallCenter text="Outros" field="outropercepcao"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Perspicácia" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseperspicacia"/>
+			<otherSmallCenter text="Inicial" field="inicialperspicacia"/>
+			<otherSmallCenter text="Apr." field="bonusperspicacia"/>
+			<otherSmallCenter text="XP" field="xpperspicacia"/>
+			<otherSmallCenter text="Outros" field="outroperspicacia"/>
+		</flowLayout>
+	</popup>
+	<popup name="popAegis" width="350" height="120" backOpacity="0.4" autoScopeNode="false">
+		<flowLayout align="top" autoHeight="true" maxControlsPerLine="6" margins="{bottom=4}" horzAlign="center">
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Consciência" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseconsciencia"/>
+			<otherSmallCenter text="Inicial" field="inicialconsciencia"/>
+			<otherSmallCenter text="Apr." field="bonusconsciencia"/>
+			<otherSmallCenter text="XP" field="xpconsciencia"/>
+			<otherSmallCenter text="Outros" field="outroconsciencia"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Espírito" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseespirito"/>
+			<otherSmallCenter text="Inicial" field="inicialespirito"/>
+			<otherSmallCenter text="Apr." field="bonusespirito"/>
+			<otherSmallCenter text="XP" field="xpespirito"/>
+			<otherSmallCenter text="Outros" field="outroespirito"/>
+
+			<flowPart minWidth="30" maxWidth="75" height="35">
+				<label align="client" class="tituloCampo" fontSize="10" text="Perseverança" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			</flowPart>
+			<recLabelCenter text="Base" field="baseperseveranca"/>
+			<otherSmallCenter text="Inicial" field="inicialperseveranca"/>
+			<otherSmallCenter text="Apr." field="bonusperseveranca"/>
+			<otherSmallCenter text="XP" field="xpperseveranca"/>
+			<otherSmallCenter text="Outros" field="outroperseveranca"/>
+		</flowLayout>
+	</popup>
+
+	<template name="recLabelCenter">
+		<flowPart minWidth="30" maxWidth="50" height="35">
+			<label align="top" class="tituloCampo" fontSize="10" text="$(text)" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			<rectangle align="client" top="0" width="30" height="25" color="black" strokeColor="white" strokeSize="1">
+				<label align="client" top="0" width="30" height="25" field="$(field)" horzTextAlign="center" vertTextAlign="center"/>
+			</rectangle>
+		</flowPart>
+	</template>
+	<template name="otherSmallCenter">
+		<flowPart minWidth="30" maxWidth="50" height="35">
+			<label align="top" class="tituloCampo" fontSize="10" text="$(text)" horzTextAlign="center" wordWrap="true" textTrimming="none" autoSize="true"/>
+			<edit align="client" class="" field="$(field)" horzTextAlign="center" fontSize="12" type="number"/>
+		</flowPart>
+	</template>
+	<template name="Cabecalho">
+        	<label left="0" top="5" width="100" height="20" text="$(nome)" horzTextAlign="trailing"/>
+        	<edit left="110" top="0" width="200" height="25" field="$(field)"/>
+    </template>
+	<template name="Historico">
+        <button left="0" top="0" height="15" width="15" text="1" fontSize="9">
+        	<event name="onClick">
+				if sheet==nil then return end;
+				sheet.field1 = true;
+				sheet.num1 = (tonumber(sheet.historicoTotal$(field)) or 0);
+				sheet.rollnome1 = sheet.historicoNome$(field);
+        	</event>
+        </button>
+    	<button left="0" top="15" height="15" width="15" text="2" fontSize="9">
+    		<event name="onClick">
+				if sheet==nil then return end;
+				sheet.field2 = true;
+				sheet.num2 = (tonumber(sheet.historicoTotal$(field)) or 0);
+				sheet.rollnome2 = sheet.historicoNome$(field);
+        	</event>
+    	</button>
+
+    	<edit left="20" top="0" width="100" height="25" field="historicoNome$(field)"/>
+
+		<rectangle left="125" top="0" width="35" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+        <label left="135" top="3" width="30" height="20" field="historicoTotal$(field)"/>
+
+        <edit left="165" top="0" width="25" height="25" field="historicoValor$(field)"/>
+        <edit left="190" top="0" width="25" height="25" field="historicoBonus$(field)"/>
+        <edit left="215" top="0" width="25" height="25" field="historicoXp$(field)"/>
+
+        <button left="240" top="0" width="25" height="25" text="i" name="histPop$(field)">
+			<event name="onClick">	
+				local pop = self:findControlByName("popHistorico");
+
+				if sheet.historicoNode$(field)== nil then
+					sheet.historicoNode$(field) = {}
+					sheet.historicoNode$(field).id = "$(field)"
+				end
+
+				sheet.historicoNode$(field).historicoValor = sheet.historicoValor$(field)
+				sheet.historicoNode$(field).historicoBonus = sheet.historicoBonus$(field)
+				sheet.historicoNode$(field).historicoXp = sheet.historicoXp$(field)
+					
+				if pop ~= nil then
+					pop:setNodeObject(sheet.historicoNode$(field));
+					pop:showPopupEx("right", self.histPop$(field));
+				else
+					showMessage("Ops, bug.. nao encontrei o popup para exibir");
+				end;
+			</event>
+		</button>
+
+        <dataLink field="historicoValor$(field)">
+			<event name="onUserChange">
+				local mod = (tonumber(sheet.historicoValor$(field)) or 0)+
+							(tonumber(sheet.historicoBonus$(field)) or 0)+
+							(tonumber(sheet.historicoXp$(field)) or 0);
+				sheet.historicoTotal$(field) = mod;
+			</event>
+		</dataLink>
+        <dataLink field="historicoBonus$(field)">
+			<event name="onUserChange">
+				local mod = (tonumber(sheet.historicoValor$(field)) or 0)+
+							(tonumber(sheet.historicoBonus$(field)) or 0)+
+							(tonumber(sheet.historicoXp$(field)) or 0);
+				sheet.historicoTotal$(field) = mod;
+			</event>
+		</dataLink>
+        <dataLink field="historicoXp$(field)">
+			<event name="onUserChange">
+				local mod = (tonumber(sheet.historicoValor$(field)) or 0)+
+							(tonumber(sheet.historicoBonus$(field)) or 0)+
+							(tonumber(sheet.historicoXp$(field)) or 0);
+				sheet.historicoTotal$(field) = mod;			
+			</event>
+		</dataLink>
+    </template>
+    <template name="Atributo">
+		<button left="0" top="0" height="15" width="15" text="1" fontSize="9">
+        	<event name="onClick">
+				if sheet==nil then return end;
+				sheet.field1 = true;
+				sheet.num1 = (tonumber(sheet.teste$(field)) or 0);
+				sheet.rollnome1 = "$(nome)";
+        	</event>
+        </button>
+    	<button left="0" top="13" height="15" width="15" text="2" fontSize="9">
+    		<event name="onClick">
+				if sheet==nil then return end;
+				sheet.field2 = true;
+				sheet.num2 = (tonumber(sheet.teste$(field)) or 0);
+				sheet.rollnome2 = "$(nome)";
+        	</event>
+    	</button>
+
+        <label left="20" top="5" width="85" height="20" text="$(nome)"/>
+		
+		<rectangle left="100" top="0" width="50" height="25" color="black" strokeColor="white" strokeSize="1"/>
+        <label left="100" top="3" width="50" height="20" field="total$(field)" horzTextAlign="center"/>
+        
+		<dataLink field="base$(field)" defaultValue="$(minVal)"/>
+		
+		<dataLink fields="{'base$(field)', 'inicial$(field)', 'bonus$(field)', 'xp$(field)', 'outro$(field)', 'penalidadeEscudo', 'penalidadeArmadura'}">
+			<event name="onChange">
+				if sheet==nil then return end;
+				local mod = (tonumber(sheet.base$(field)) or 0)+
+							(tonumber(sheet.inicial$(field)) or 0)+
+							(tonumber(sheet.bonus$(field)) or 0)+
+							(tonumber(sheet.xp$(field)) or 0) +
+							(tonumber(sheet.outro$(field)) or 0);
+				if $(fator) > 1 then
+					local pen = 0;
+					if "$(field)"=="agilidade" then
+						pen = (tonumber(sheet.penalidadeArmadura) or 0) +
+							(tonumber(sheet.penalidadeEscudo) or 0);
+						mod = mod - pen;
+					end;
+					sheet.total$(field) = mod .. " | " ..(mod / $(fator));
+					sheet.teste$(field) = mod / $(fator);
+				else
+					sheet.total$(field) = mod;
+					sheet.teste$(field) = mod;
+				end;
+			</event>
+		</dataLink>
+    </template>
+	<template name="PV">
+        	<label left="10" top="0" width="95" height="20" text="$(nome)"/>
+			<flowLayout left="100" top="0" height="100" width="60">                 
+					<checkBox align="left" width="20" field="check1_1_$(field)"/>
+					<checkBox align="left" width="20" field="check2_1_$(field)"/>
+					<checkBox align="left" width="20" field="check3_1_$(field)"/>
+					<flowLineBreak/>
+				<!-- if tonumber(quantidade)>=2 then -->                  
+					<checkBox align="left" width="20" field="check1_2_$(field)"/>
+					<checkBox align="left" width="20" field="check2_2_$(field)"/>
+					<checkBox align="left" width="20" field="check3_2_$(field)"/>
+					<flowLineBreak/>
+				<!-- end; -->
+				<!-- if tonumber(quantidade)>=3 then -->                  
+					<checkBox align="left" width="20" field="check1_3_$(field)"/>
+					<checkBox align="left" width="20" field="check2_3_$(field)"/>
+					<checkBox align="left" width="20" field="check3_3_$(field)"/>
+					<flowLineBreak/>
+				<!-- end; -->
+				<!-- if tonumber(quantidade)>=4 then -->                  
+					<checkBox align="left" width="20" field="check1_4_$(field)"/>
+					<checkBox align="left" width="20" field="check2_4_$(field)"/>
+					<checkBox align="left" width="20" field="check3_4_$(field)"/>
+					<flowLineBreak/>
+				<!-- end; -->
+				<!-- if tonumber(quantidade)>=5 then -->                  
+					<checkBox align="left" width="20" field="check1_5_$(field)"/>
+					<checkBox align="left" width="20" field="check2_5_$(field)"/>
+					<checkBox align="left" width="20" field="check3_5_$(field)"/>
+					<flowLineBreak/>
+				<!-- end; -->
+			</flowLayout>
+			<edit left="170" top="0" width="30" height="25" field="penalidade$(field)"/>
+			<dataLink field="penalidade$(field)" defaultValue="$(default)"/>
+			<script>
+				local function isAny$(field)()
+					local mod = sheet.check1_1_$(field) or sheet.check2_1_$(field) or sheet.check3_1_$(field);
+					local quantidade = tonumber($(quantidade));
+					if quantidade>=2 then
+						mod = mod or sheet.check1_2_$(field) or sheet.check2_2_$(field) or sheet.check3_2_$(field);
+					end;
+					if quantidade>=3 then
+						mod = mod or sheet.check1_3_$(field) or sheet.check2_3_$(field) or sheet.check3_3_$(field);
+					end;
+					if quantidade>=4 then
+						mod = mod or sheet.check1_4_$(field) or sheet.check2_4_$(field) or sheet.check3_4_$(field);	
+					end;
+					if quantidade>=5 then
+						mod = mod or sheet.check1_5_$(field) or sheet.check2_5_$(field) or sheet.check3_5_$(field);
+					end;
+					return mod;
+				end;
+			</script>
+    </template>
+
+    <scrollBox align="client">
+		<layout left="0" top="0" width="960" height="70">
+			<rectangle left="5" top="0" width="950" height="70" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<layout left="5" top="5" width="310" height="25" >
+				<Cabecalho field="nome" nome="Nome"/>
+			</layout>
+			<layout left="320" top="5" width="310" height="25" >
+				<Cabecalho field="conceito" nome="Conceito"/>
+			</layout>
+			<layout left="585" top="5" width="310" height="25" >
+				<Cabecalho field="faccao" nome="Facção"/>
+			</layout>
+			<layout left="5" top="35" width="310" height="25" >
+				<Cabecalho field="impeto" nome="Ímpeto"/>
+			</layout>
+			<layout left="320" top="35" width="310" height="25" >
+				<Cabecalho field="comportamento" nome="Comportamento"/>
+			</layout>
+			<layout left="585" top="35" width="310" height="25" >
+				<Cabecalho field="direcao" nome="Direção"/>
+			</layout>
+		</layout>
+		
+		<layout left="0" top="75" width="235" height="245">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<label left="5" top="0" width="235" height="20" text="ATRIBUTOS" horzTextAlign="center"/>
+			<button left="140" top="80" width="75" height="20" text="Físicos" horzTextAlign="center" rotationAngle="90" name="btFisicos" onClick="ShowPopup(&quot;popFisicos&quot;,&quot;btFisicos&quot;)"/>
+			<button left="140" top="185" width="75" height="20" text="Mentais" horzTextAlign="center" rotationAngle="90" name="btMentais" onClick="ShowPopup(&quot;popMentais&quot;,&quot;btMentais&quot;)"/>
+			
+			<label left="110" top="25" width="235" height="20" text=" Total"/>
+			
+			<layout left="5" top="50" width="235" height="30" >
+				<Atributo field="forca" nome="Força" fator="2" minVal="3"/>
+			</layout>
+			<layout left="5" top="80" width="235" height="30" >
+				<Atributo field="agilidade" nome="Agilidade" fator="2" minVal="3"/>
+			</layout>
+			<layout left="5" top="110" width="235" height="30" >
+				<Atributo field="resiliencia" nome="Resiliência" fator="2" minVal="3"/>
+			</layout>
+			<horzLine left="0" top="145" width="235" strokeColor="white"/>
+			<layout left="5" top="150" width="235" height="30" >
+				<Atributo field="carisma" nome="Carisma" fator="2" minVal="3"/>
+			</layout>
+			<layout left="5" top="180" width="235" height="30" >
+				<Atributo field="percepcao" nome="Percepção" fator="2" minVal="3"/>
+			</layout>
+			<layout left="5" top="210" width="235" height="30" >
+				<Atributo field="perspicacia" nome="Perspicácia" fator="2" minVal="3"/>
+			</layout>
+		</layout>
+		
+		<layout left="0" top="325" width="235" height="185">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<label left="5" top="0" width="235" height="20" text="EIDOLON" horzTextAlign="center"/>
+			
+			<label left="110" top="25" width="235" height="20" text=" Total"/>
+			<label left="160" top="25" width="235" height="20" text="Base"/>
+			
+			<button left="140" top="80" width="75" height="20" text="Aegis" horzTextAlign="center" rotationAngle="90" name="btAegis" onClick="ShowPopup(&quot;popAegis&quot;,&quot;btAegis&quot;)"/>
+			<layout left="5" top="50" width="235" height="30" >
+				<Atributo field="consciencia" nome="Consciência" fator="1" minVal="1"/>
+			</layout>
+			<layout left="5" top="80" width="235" height="30" >
+				<Atributo field="espirito" nome="Espírito" fator="1" minVal="1"/>
+			</layout>
+			<layout left="5" top="110" width="235" height="30" >
+				<Atributo field="perseveranca" nome="Perseverança" fator="1" minVal="1"/>
+			</layout>
+			
+			<horzLine left="0" top="145" width="235" strokeColor="white"/>
+			<layout left="5" top="150" width="235" height="30" >
+				<label left="10" top="0" width="85" height="20" text="Gladius"/>
+				<progressBar left="70" top="5" width="65" height="15" color="blue" hitTest="true" max="1" field="gladius"/>
+				<edit left="150" top="0" width="30" height="25" type="number" field="gladiusMin">
+					<event name="onUserChange">
+						if sheet.gladiusMin~=nil and sheet.gladiusMax~=nil then
+							sheet.gladius = sheet.gladiusMin/sheet.gladiusMax;
+						end;
+					</event>
+				</edit>
+				<edit left="180" top="0" width="30" height="25" type="number" field="gladiusMax">
+					<event name="onUserChange">
+						if sheet.gladiusMin~=nil and sheet.gladiusMax~=nil then
+							sheet.gladius = sheet.gladiusMin/sheet.gladiusMax;
+						end;
+					</event>
+				</edit>
+			</layout>
+		</layout>
+
+		<layout left="0" top="515" width="235" height="70">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			
+			<button left="10" top="10" width="70" height="20" text="Iniciativa">
+				 <event name="onClick">
+					local mesaDoPersonagem = rrpg.getMesaDe(sheet);
+					
+					rolagem = rrpg.interpretarRolagem("1d10 + " .. (sheet.iniciativa or 0));
+					mesaDoPersonagem.activeChat:rolarDados(rolagem, "Iniciativa de " .. (sheet.nome or 0));
+				 </event>
+			</button>
+			<rectangle left="90" top="10" width="35" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="100" top="10" width="30" height="20" field="iniciativa"/>
+			
+			<edit left="130" top="10" width="30" height="25" type="number" field="iniciativaBonus"/>
+			<label left="165" top="10" width="80" height="20" field="ms"/>
+			
+			<label left="10" top="40" width="90" height="20" text="Velocidade"/>
+			<rectangle left="90" top="40" width="35" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="100" top="40" width="30" height="20" field="velocidade"/>
+			
+			<edit left="130" top="40" width="30" height="25" type="number" field="velocidadeBonus"/>
+			<label left="165" top="40" width="80" height="20" field="kmh"/>
+			
+			
+			<dataLink fields="{'totalforca', 'totalagilidade', 'totalperspicacia', 'iniciativaBonus', 'velocidadeBonus'}">
+				<event name="onChange">
+					if sheet ~= nil then
+						sheet.iniciativa = ((tonumber(sheet.testeagilidade) or 0) + (tonumber(sheet.testeperspicacia) or 0)) * 2 + (tonumber(sheet.iniciativaBonus) or 0);
+						sheet.velocidade = ((tonumber(sheet.testeagilidade) or 0) + (tonumber(sheet.testeforca) or 0) + 2) * 2 + (tonumber(sheet.velocidadeBonus) or 0);
+						local mod = math.floor(((tonumber(sheet.velocidade) or 0)/3) * 100);
+						mod = mod / 100;
+						sheet.ms = mod .. "m/s";
+						sheet.kmh = ((tonumber(sheet.velocidade) or 0)*1.2) .. "Km/h";
+					end;
+				</event>
+			</dataLink>
+		</layout>
+		
+		<layout left="240" top="75" width="300" height="320">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<label left="0" top="0" width="300" height="20" text="HISTORICOS" horzTextAlign="center"/>
+			
+			<label left="25" top="20" width="315" height="20" text=" Nome"/>
+			<label left="135" top="20" width="315" height="20" text="Total"/>
+			<label left="170" top="20" width="25" height="20" text="Ini" horzTextAlign="center"/>
+			<label left="195" top="20" width="25" height="20" text="Apr" horzTextAlign="center"/>
+			<label left="220" top="20" width="25" height="20" text="XP" horzTextAlign="center"/>
+			
+			<scrollBox left="0" top="40" width="295" height="260">
+				<layout left="5" top="0" width="270" height="35">
+					<Historico field="1_1"/>
+				</layout>
+				<layout left="5" top="35" width="270" height="35">
+					<Historico field="1_2"/>
+				</layout>
+				<layout left="5" top="70" width="270" height="35">
+					<Historico field="1_3"/>
+				</layout>
+				<layout left="5" top="105" width="270" height="35">
+					<Historico field="1_4"/>
+				</layout>
+				<layout left="5" top="140" width="270" height="35">
+					<Historico field="1_5"/>
+				</layout>
+				<layout left="5" top="175" width="270" height="35">
+					<Historico field="1_6"/>
+				</layout>
+				<layout left="5" top="210" width="270" height="35">
+					<Historico field="2_1"/>
+				</layout>
+				<layout left="5" top="245" width="270" height="35">
+					<Historico field="2_2"/>
+				</layout>
+				<layout left="5" top="280" width="270" height="35">
+					<Historico field="2_3"/>
+				</layout>
+				<layout left="5" top="315" width="270" height="35">
+					<Historico field="2_4"/>
+				</layout>
+				<layout left="5" top="350" width="270" height="35">
+					<Historico field="2_5"/>
+				</layout>
+				<layout left="5" top="385" width="270" height="35">
+					<Historico field="2_6"/>
+				</layout>
+				<layout left="5" top="420" width="270" height="35">
+					<Historico field="3_1"/>
+				</layout>
+				<layout left="5" top="455" width="270" height="35">
+					<Historico field="3_2"/>
+				</layout>
+				<layout left="5" top="490" width="270" height="35">
+					<Historico field="3_3"/>
+				</layout>
+				<layout left="5" top="525" width="270" height="35">
+					<Historico field="3_4"/>
+				</layout>
+				<layout left="5" top="560" width="270" height="35">
+					<Historico field="3_5"/>
+				</layout>
+				<layout left="5" top="595" width="270" height="35">
+					<Historico field="3_6"/>
+				</layout>
+			</scrollBox>
+		</layout>
+
+		<layout left="240" top="400" width="300" height="180">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<label left="0" top="5" width="300" height="20" text="OUTROS" horzTextAlign="center"/>
+			<button text="+" left="100" top="5" width="20" height="20">
+				<event name="onClick">
+					local rcl = self.rclListaOutros:append();
+					if rcl~=nil then 
+						rcl.multXp = sheet.auditxpcost_out;
+						rcl.multApr = sheet.auditbonuscost_out;
+					end;
+				</event>
+			</button>
+			
+			<scrollBox left="0" top="20" width="295" height="160">
+				<recordList name="rclListaOutros" field="campoDosOutros" templateForm="frmOther" align="client" margins="{left=5,right=5,top=5,bottom=5}" layout="vertical">
+					<event name="onCompare">
+			            return Utils.compareStringPtBr(nodeA.nome, nodeB.nome);
+			        </event>
+				</recordList>
+			</scrollBox>
+		</layout>
+		
+		<layout left="545" top="75" width="210" height="450">
+			<rectangle align="client" color="black" xradius="15" yradius="15" cornerType="round"/>
+			<label left="5" top="0" width="210" height="20" text="SAÚDE" horzTextAlign="center"/>
+			
+			<horzLine left="0" top="25" width="210" strokeColor="white"/>
+			<layout left="0" top="30" width="210" height="60">
+				<PV nome="LEVE" field="1" quantidade="3" default="0"/>
+			</layout>
+			<horzLine left="0" top="95" width="210" strokeColor="white"/>
+			<layout left="0" top="100" width="210" height="40">
+				<PV nome="MEDIO" field="2" quantidade="2" default="0.5"/>
+			</layout>
+			<horzLine left="0" top="145" width="210" strokeColor="white"/>
+			<layout left="0" top="150" width="210" height="40">
+				<PV nome="SERIO" field="3" quantidade="2" default="1"/>
+			</layout>
+			<horzLine left="0" top="195" width="210" strokeColor="white"/>
+			<layout left="0" top="200" width="210" height="40">
+				<PV nome="GRAVE" field="4" quantidade="2" default="2"/>
+			</layout>
+			<horzLine left="0" top="245" width="210" strokeColor="white"/>
+			<layout left="0" top="250" width="210" height="25">
+				<PV nome="INCAPACITADO" field="5" quantidade="1" default="4"/>
+			</layout>
+			<horzLine left="0" top="280" width="210" strokeColor="white"/>
+			<layout left="0" top="285" width="210" height="100">
+				<PV nome="INCOSCIENTE" field="6" quantidade="5" default="0"/>
+			</layout>
+			<horzLine left="0" top="385" width="210" strokeColor="white"/>
+			
+			<label left="5" top="415" width="60" height="20" text="Absorção"/>
+			
+			<label left="65" top="390" width="30" height="20" text="Total" horzTextAlign="center"/>
+			<rectangle left="65" top="415" width="30" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="65" top="415" width="30" height="25" field="absorcao" horzTextAlign="center"/>
+			
+			<label left="100" top="390" width="30" height="20" text=" Res." horzTextAlign="center"/>
+			<rectangle left="100" top="415" width="30" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="100" top="415" width="30" height="25" field="absRes" horzTextAlign="center"/>
+			<dataLink field="totalresiliencia">
+				<event name="onChange">
+					if sheet ~= nil then
+						sheet.absRes = math.floor(tonumber(sheet.testeresiliencia) or 0);
+					end;
+				</event>
+			</dataLink>
+			
+			<label left="135" top="390" width="30" height="20" text="Arm" horzTextAlign="center"/>
+			<rectangle left="135" top="415" width="30" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="135" top="415" width="30" height="25" field="indiceArmadura" horzTextAlign="center"/>
+			
+			<label left="170" top="390" width="30" height="20" text=" Out." horzTextAlign="center"/>
+			<edit left="170" top="415" width="30" height="25" type="number" field="absOutros"/>
+			
+			<dataLink fields="{'absRes', 'indiceArmadura', 'absOutros'}">
+				<event name="onChange">
+					if sheet ~= nil then
+						sheet.absorcao = (tonumber(sheet.absRes) or 0) + (tonumber(sheet.absOutros) or 0) + (tonumber(sheet.indiceArmadura) or 0);
+					end;
+				</event>
+			</dataLink>
+		</layout>
+		
+		<layout left="760" top="445" width="300" height="80">
+			<rectangle align="client" color="black" xradius="5" yradius="5" cornerType="round"/>
+			
+			<rectangle left="10" top="30" width="35" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="5" top="10" width="50" height="20" text="Dado 1"/>
+       		<label left="20" top="32" width="30" height="20" field="num1" text="val"/>
+			
+       		<label left="46" top="32" width="10" height="20" text="+"/>
+       		
+       		<rectangle left="55" top="30" width="35" height="25" color="Black" strokeColor="white" strokeSize="1"/>
+			<label left="50" top="10" width="50" height="20" text="Dado 2"/>
+       		<label left="65" top="32" width="30" height="20" field="num2" text="val"/>
+			
+			<button left="70" top="60" width="15" height="15" text="x" fontSize="10">
+				<event name="onClick">
+					if sheet==nil then return end;
+					sheet.field2 = nil;
+					sheet.num2 = nil;
+					sheet.rollnome2 = nil;
+				</event>
+			</button>
+			<label left="105" top="60" width="80" height="15" field="rollnome1" fontSize="11" horzTextAlign="trailing"/>
+			<label left="185" top="60" width="15" height="15" text="+" horzTextAlign="center"/>
+			<label left="200" top="60" width="80" height="15" field="rollnome2" fontSize="11"/>
+       		
+			<label left="92" top="32" width="10" height="20" text="+"/>
+       		
+			<label left="105" top="10" width="40" height="20" text="Especs"/>
+			<comboBox left="105" top="30" width="50" items="{'0', '1,5', '3'}"  values="{'0', '1', '2'}" value="0" field="especBonus"/>
+			
+			<label left="160" top="10" width="40" height="20" text="Extra"/>
+       		<edit left="160" top="30" width="30" height="25" field="extra"/>
+			
+			<label left="195" top="10" width="40" height="20" text="Dific."/>
+			<edit left="195" top="30" width="30" height="25" field="dificuldade" type="number"/>
+			
+			<button left="230" top="30" width="50" text="ROLAR" fontSize="11">
+                <event name="onClick">
+                	rolar();
+                </event>
+       		</button>
+		</layout>
+		
+		<rectangle left="760" top="90" width="350" height="350" color="DimGray" xradius="5" yradius="5" cornerType="innerLine"/>
+		<image left="760" top="90" width="350" height="350" field="avatar" editable="true" style="autoFit"/>
+	</scrollBox>
+
+	<script>
+		local function rolar()
+			local mesaDoPersonagem = rrpg.getMesaDe(sheet);
+			local num1 = (tonumber(sheet.num1) or 0);
+			local num2 = (tonumber(sheet.num2) or 0);
+            local parada = num1 + num2 + (tonumber(sheet.extra) or 0);
+            if sheet.especBonus=='1' then
+            	parada = parada + 1.5;
+            elseif sheet.especBonus=='2' then
+            	parada = parada + 3;
+            end;
+			local pen = 0;
+			if isAny6() then
+				pen = tonumber(sheet.penalidade6) or 0;
+			elseif isAny5() then
+				pen = tonumber(sheet.penalidade5) or 0;
+			elseif isAny4() then
+				pen = tonumber(sheet.penalidade4) or 0;
+			elseif isAny3() then
+				pen = tonumber(sheet.penalidade3) or 0;
+			elseif isAny2() then
+				pen = tonumber(sheet.penalidade2) or 0;
+			elseif isAny1() then
+				pen = tonumber(sheet.penalidade1) or 0;
+			end;
+			parada = parada - math.abs(pen);
+			
+            parada = math.floor(parada);
+
+           	local dificuldade = (tonumber(sheet.dificuldade) or 0);
+           	dificuldade = dificuldade;
+
+           	local nome = "";
+           	if sheet.rollnome1 ~= nil then 
+           		nome = sheet.rollnome1 .. " ";
+           	end;
+           	if sheet.rollnome2 ~= nil then
+           		nome = nome .. "+ " .. sheet.rollnome2 .. " ";
+           	end;
+
+           	if parada &lt; 1 then 
+           		mesaDoPersonagem.activeChat:enviarMensagem("Sem dados suficientes para essa rolagem. ");
+           		return;
+           	end;
+
+           	rolagem = rrpg.interpretarRolagem(parada .. "d10");
+           	mesaDoPersonagem.activeChat:rolarDados(rolagem, nome .. "Dificuldade: " .. dificuldade  .. " (" .. num1 .. " + " .. num2 .. " + " .. (sheet.especBonus or 0) .. "x especializaçao + " .. (sheet.extra or 0) .. " - " .. pen .. " dano)", 
+				function (rolado)
+					local sucessos = 0;
+					local op = rolado.ops[1];
+
+					for j=1, #op.resultados, 1 do
+						if op.resultados[j] >= dificuldade then
+					    	sucessos = sucessos +1;
+						end;
+					end;
+					local mesaDoPersonagem = rrpg.getMesaDe(sheet);
+					mesaDoPersonagem.activeChat:enviarMensagem(sucessos .. " Sucesso(s)!");
+				end);
+		end;
+	</script>
+</form>

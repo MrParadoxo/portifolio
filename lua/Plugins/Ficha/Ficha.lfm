@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form formType="sheetTemplate" dataType="br.com.rpg.trpg.Ficha"
+		title="Ficha De Personagem TRPG" name="frmFichaPersonaTPR">
+         <style>
+                layout.LayoutCampo {
+                        width: 64;
+                        align: top;
+                        margins: {left=2, right=2};
+                }              
+
+                layout.LayoutCampo edit {
+                        height:30;
+                        horzTextAlign: center;
+                        fontSize: 20;
+                        align: top;
+                }              
+
+                layout.LayoutCampo label {
+						align: top;
+                        horzTextAlign: center;
+                        vertTextAlign: leading;
+                        autoSize: true;
+
+                }
+
+        </style>                
+
+        <layout left="10" top="10" width="64" height="64">  
+                <layout class="LayoutCampo">
+                        <edit field="personagem.armadura"/>
+                        <label text="Armadura"/>               
+                </layout>      
+				 <layout class="LayoutCampo">
+                        <edit field="personagem.pv"/>
+                        <label text="PV"/>               
+                </layout> 
+				<layout class="LayoutCampo">
+                        <edit field="personagem.EST"/>
+                        <label text="EST"/>               
+                </layout>	
+        </layout>
+		
+		<layout left="80" top="100" width="100" height="100">
+			<layout class="LayoutTexto">
+				<edit field="texto.magias"/>
+				<label text="MAGIAS"/>
+			</layout>
+		
+		
+		</layout>
+</form>
