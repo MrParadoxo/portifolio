@@ -1,1 +1,0 @@
-# Ficha Tormenta 20

@@ -1,6 +1,0 @@
-[pt]
-scene.height=Altura
-scene.height.selected=Todos Selecionados
-scene.height.select=Selecionar
-scene.height.input=Digite a altura em quadrados
-scene.height.invalid=Valor Inválido

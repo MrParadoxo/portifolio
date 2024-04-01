@@ -1,1 +1,0 @@
-# Ficha D&D Next
